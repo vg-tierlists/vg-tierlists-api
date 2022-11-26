@@ -11,6 +11,7 @@ env:
   REGISTRY: quay.io/gh-stocky37
   REGISTRY_USER: ${{ secrets.QUAY_USERNAME }}
   REGISTRY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
+  RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
 
 jobs:
   test:
@@ -39,8 +40,9 @@ jobs:
 
   build:
     name: Build & publish image
-    needs: test
     runs-on: ubuntu-latest
+    outputs:
+      digest: ${{ steps.push-registry.outputs.digest }}
     steps:
     - uses: actions/checkout@v3
 
@@ -62,3 +64,24 @@ jobs:
         registry: ${{ env.REGISTRY }}
         username: ${{ env.REGISTRY_USER }}
         password: ${{ env.REGISTRY_PASSWORD }}
+
+  deploy:
+    name: Deploy application
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs: [build, test]
+    steps:
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDS }}
+
+      - name: Update application image in Azure
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.40.0
+          inlineScript: |
+            az extension add --name containerapp
+            az containerapp update \
+              -g "${{ env.RESOURCE_GROUP }}" \
+              -n "${{ env.APP_NAME }}" \
+              -i "${{ env.REGISTRY }}/${{ env.APP_NAME }}@${{ needs.build.outputs.digest }}"
