@@ -15,7 +15,6 @@ dependencies {
 	implementation 'io.quarkus:quarkus-arc'
 	implementation 'io.quarkus:quarkus-kotlin'
 	implementation 'io.quarkus:quarkus-mongodb-panache-kotlin'
-	implementation 'io.quarkus:quarkus-mongodb-rest-data-panache'
 	implementation 'io.quarkus:quarkus-resteasy'
 	implementation 'io.quarkus:quarkus-resteasy-jackson'
 	implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
