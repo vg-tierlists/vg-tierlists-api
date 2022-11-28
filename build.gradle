@@ -13,6 +13,7 @@ dependencies {
 	implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
 	implementation 'com.github.slugify:slugify:3.0.2'
 	implementation 'io.quarkus:quarkus-arc'
+	implementation 'io.quarkus:quarkus-config-yaml'
 	implementation 'io.quarkus:quarkus-kotlin'
 	implementation 'io.quarkus:quarkus-liquibase-mongodb'
 	implementation 'io.quarkus:quarkus-mongodb-panache-kotlin'
