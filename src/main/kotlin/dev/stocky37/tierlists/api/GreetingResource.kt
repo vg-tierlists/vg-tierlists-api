@@ -1,4 +1,4 @@
-package dev.stocky37
+package dev.stocky37.tierlists.api
 
 import javax.ws.rs.GET
 import javax.ws.rs.Path
@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType
 @Path("/hello")
 class GreetingResource {
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    fun hello() = "Hello RESTEasy"
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	fun hello() = "Hello RESTEasy"
 }
