@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: stocky37
+      changes:
+        - createCollection:
+            collectionName: games
+        - createIndex:
+            collectionName: games
+            keys: '{slug: 1}'
+            options: '{name: "slug", unique: true}'
