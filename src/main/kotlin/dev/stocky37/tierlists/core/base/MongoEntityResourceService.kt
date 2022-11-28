@@ -23,6 +23,15 @@ abstract class MongoEntityResourceService<Resource : Any, Entity : PanacheMongoE
 		return fromEntity(entity)
 	}
 
+	override fun delete(id: String): Resource? {
+		val entity = repo().findById(ObjectId(id))
+		if (entity == null) {
+			return entity
+		}
+		repo().delete(entity)
+		return fromEntity(entity)
+	}
+
 	protected abstract fun repo(): PanacheMongoRepository<Entity>
 
 	protected abstract fun toEntity(resource: Resource): Entity

@@ -32,4 +32,8 @@ abstract class MongoResourceApi<Resource : Any> : ResourceApi<Resource> {
 			}
 		}
 	}
+
+	override fun delete(id: String): Resource {
+		return svc.delete(id) ?: throw NotFoundException()
+	}
 }

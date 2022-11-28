@@ -1,10 +1,7 @@
 package dev.stocky37.tierlists.api.base
 
 import org.jboss.resteasy.annotations.jaxrs.PathParam
-import javax.ws.rs.GET
-import javax.ws.rs.POST
-import javax.ws.rs.Path
-import javax.ws.rs.Produces
+import javax.ws.rs.*
 
 
 interface ResourceApi<Resource : Any> {
@@ -20,4 +17,9 @@ interface ResourceApi<Resource : Any> {
 	@POST
 	@Produces("application/json")
 	fun create(resource: Resource): Resource
+
+	@DELETE
+	@Path("{id}")
+	@Produces("application/json")
+	fun delete(@PathParam id: String): Resource
 }
