@@ -1,0 +1,26 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	<changeSet id="1" author="stocky37">
+		<ext:createCollection collectionName="games"/>
+		<ext:createIndex collectionName="games">
+			<ext:keys>{color: 1}</ext:keys>
+			<ext:options>{name: "slug", unique: true}</ext:options>
+		</ext:createIndex>
+	</changeSet>
+	<changeSet id="2" author="stocky37">
+		<ext:dropIndex collectionName="games">
+			<ext:keys>{color: 1}</ext:keys>
+			<ext:options>{name: "slug", unique: true}</ext:options>
+		</ext:dropIndex>
+		<ext:createIndex collectionName="games">
+			<ext:keys>{slug: 1}</ext:keys>
+			<ext:options>{name: "slug", unique: true}</ext:options>
+		</ext:createIndex>
+	</changeSet>
+
+</databaseChangeLog>
