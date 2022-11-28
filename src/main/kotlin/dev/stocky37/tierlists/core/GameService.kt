@@ -4,15 +4,20 @@ import com.github.slugify.Slugify
 import dev.stocky37.tierlists.api.json.Game
 import dev.stocky37.tierlists.core.base.MongoEntityResourceService
 import dev.stocky37.tierlists.db.GameEntity
+import io.quarkus.mongodb.panache.kotlin.PanacheMongoRepository
 import org.bson.types.ObjectId
 import javax.enterprise.context.ApplicationScoped
 import javax.inject.Inject
 
 @ApplicationScoped
-class GameService : MongoEntityResourceService<Game, GameEntity>() {
+class GameService : MongoEntityResourceService<Game, GameEntity>(), PanacheMongoRepository<GameEntity> {
 
 	@Inject
 	lateinit var slugifier: Slugify;
+
+	override fun repo(): PanacheMongoRepository<GameEntity> {
+		return this
+	}
 
 	override fun toEntity(resource: Game): GameEntity {
 		return GameEntity(
