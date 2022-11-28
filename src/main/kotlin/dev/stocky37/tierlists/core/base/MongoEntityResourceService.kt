@@ -25,7 +25,6 @@ abstract class MongoEntityResourceService<Resource : Any, Entity : PanacheMongoE
 
 	protected abstract fun repo(): PanacheMongoRepository<Entity>
 
-	protected abstract fun toEntity(resource: Resource): Entity;
-	protected abstract fun fromEntity(entity: Entity): Resource;
-
+	protected abstract fun toEntity(resource: Resource): Entity
+	protected abstract fun fromEntity(entity: Entity): Resource
 }

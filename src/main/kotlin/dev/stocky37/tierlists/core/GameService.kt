@@ -13,7 +13,18 @@ import javax.inject.Inject
 class GameService : MongoEntityResourceService<Game, GameEntity>(), PanacheMongoRepository<GameEntity> {
 
 	@Inject
-	lateinit var slugifier: Slugify;
+	private lateinit var slugifier: Slugify
+
+	override fun get(id: String): Game? {
+		return if (ObjectId.isValid(id)) {
+			super.get(id)
+		} else getBySlug(id)
+	}
+
+	fun getBySlug(slug: String): Game? {
+		val entity = find("slug = ?1", slug).firstResult()
+		return if (entity == null) null else fromEntity(entity)
+	}
 
 	override fun repo(): PanacheMongoRepository<GameEntity> {
 		return this
