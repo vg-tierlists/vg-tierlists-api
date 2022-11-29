@@ -1,0 +1,21 @@
+quarkus:
+  mongodb:
+    connection-string: mongodb+srv://${MONGODB_HOST}/
+    credentials:
+      username: ${MONGODB_ADMIN_USER}
+      password: ${MONGODB_ADMIN_PASSWORD}
+      auth-source: admin
+    database: ${MONGODB_DATABASE:-tierlists}
+    write-concern:
+      retry-writes: true
+      w: majority
+    app:
+      connection-string: mongodb+srv://${MONGODB_HOST}/
+      write-concern:
+        retry-writes: true
+        w: majority
+      credentials:
+        username: ${MONGODB_USER}
+        password: ${MONGODB_PASSWORD}
+        auth-source: admin
+      database: ${MONGODB_DATABASE:-tierlists}

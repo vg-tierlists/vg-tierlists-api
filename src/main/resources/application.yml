@@ -1,0 +1,4 @@
+quarkus:
+  liquibase-mongodb:
+    migrate-at-start: true
+    change-log: db/changelog.yml
