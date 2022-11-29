@@ -8,18 +8,14 @@ import javax.inject.Inject
 import javax.ws.rs.WebApplicationException
 import javax.ws.rs.core.Response
 
-abstract class MongoResourcesApi<T : Any> : ResourcesApi<T> {
+abstract class MongoResourcesApi<Resource : Any> : ResourcesApi<Resource> {
 
 	@Inject
-	private lateinit var svc: ResourceService<T>
+	private lateinit var svc: ResourceService<Resource>
 
-	@Inject
-	private lateinit var resourceApi: ResourceApi<T>
+	override fun list(): Uni<List<Resource>> = svc.list()
 
-
-	override fun list(): Uni<List<T>> = svc.list()
-
-	override fun create(resource: T): Uni<T> {
+	override fun create(resource: Resource): Uni<Resource> {
 		try {
 			return svc.create(resource)
 		} catch (e: MongoWriteException) {
@@ -29,9 +25,5 @@ abstract class MongoResourcesApi<T : Any> : ResourcesApi<T> {
 				e
 			}
 		}
-	}
-
-	override fun get(): ResourceApi<T> {
-		return resourceApi
 	}
 }
