@@ -4,31 +4,29 @@ import com.github.slugify.Slugify
 import dev.stocky37.tierlists.api.json.Game
 import dev.stocky37.tierlists.core.base.MongoEntityResourceService
 import dev.stocky37.tierlists.db.GameEntity
-import io.quarkus.mongodb.panache.kotlin.PanacheMongoRepository
+import io.quarkus.mongodb.panache.kotlin.reactive.ReactivePanacheMongoRepository
+import io.smallrye.mutiny.Uni
 import org.bson.types.ObjectId
 import javax.enterprise.context.ApplicationScoped
 import javax.inject.Inject
 
 @ApplicationScoped
-class GameService : MongoEntityResourceService<Game, GameEntity>(), PanacheMongoRepository<GameEntity> {
+class GameService : MongoEntityResourceService<Game, GameEntity>(), ReactivePanacheMongoRepository<GameEntity> {
 
 	@Inject
 	internal lateinit var slugifier: Slugify
 
-	override fun get(id: String): Game? {
-		return if (ObjectId.isValid(id)) {
-			super.get(id)
-		} else getBySlug(id)
+	override fun findById(idOrSlug: String): Uni<GameEntity?> {
+		return if (ObjectId.isValid(idOrSlug)) {
+			findById(ObjectId(idOrSlug))
+		} else {
+			findBySlug(idOrSlug)
+		}
 	}
 
-	fun getBySlug(slug: String): Game? {
-		val entity = find("slug = ?1", slug).firstResult()
-		return if (entity == null) null else fromEntity(entity)
-	}
+	fun findBySlug(slug: String) = find("slug = ?1", slug).firstResult()
 
-	override fun repo(): PanacheMongoRepository<GameEntity> {
-		return this
-	}
+	override fun repo() = this
 
 	override fun toEntity(resource: Game): GameEntity {
 		return GameEntity(

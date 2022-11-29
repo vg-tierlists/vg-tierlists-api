@@ -1,6 +1,6 @@
 package dev.stocky37.tierlists.api.base
 
-import org.jboss.resteasy.annotations.jaxrs.PathParam
+import io.smallrye.mutiny.Uni
 import javax.ws.rs.*
 
 
@@ -8,18 +8,18 @@ interface ResourceApi<Resource : Any> {
 	@GET
 	@Path("{id}")
 	@Produces("application/json")
-	fun get(@PathParam id: String): Resource
+	fun get(id: String): Uni<Resource>
 
 	@GET
 	@Produces("application/json")
-	fun list(): Collection<Resource>
+	fun list(): Uni<List<Resource>>
 
 	@POST
 	@Produces("application/json")
-	fun create(resource: Resource): Resource
+	fun create(resource: Resource): Uni<Resource>
 
 	@DELETE
 	@Path("{id}")
 	@Produces("application/json")
-	fun delete(@PathParam id: String): Resource
+	fun delete(id: String): Uni<Void>
 }
