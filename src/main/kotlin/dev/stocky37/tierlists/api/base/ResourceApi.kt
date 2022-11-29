@@ -1,25 +1,18 @@
 package dev.stocky37.tierlists.api.base
 
 import io.smallrye.mutiny.Uni
-import javax.ws.rs.*
+import org.jboss.resteasy.reactive.RestPath
+import javax.ws.rs.DELETE
+import javax.ws.rs.GET
+import javax.ws.rs.Produces
+import javax.ws.rs.core.MediaType.APPLICATION_JSON
 
 
 interface ResourceApi<Resource : Any> {
 	@GET
-	@Path("{id}")
-	@Produces("application/json")
-	fun get(id: String): Uni<Resource>
-
-	@GET
-	@Produces("application/json")
-	fun list(): Uni<List<Resource>>
-
-	@POST
-	@Produces("application/json")
-	fun create(resource: Resource): Uni<Resource>
+	@Produces(APPLICATION_JSON)
+	fun get(@RestPath id: String): Uni<Resource>
 
 	@DELETE
-	@Path("{id}")
-	@Produces("application/json")
-	fun delete(id: String): Uni<Void>
+	fun delete(@RestPath id: String): Uni<Void>
 }
