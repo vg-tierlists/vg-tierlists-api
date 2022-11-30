@@ -1,17 +1,22 @@
-package dev.stocky37.tierlists.api.base
+package dev.stocky37.tierlists.rest.base
 
 import com.mongodb.ErrorCategory
 import com.mongodb.MongoWriteException
 import dev.stocky37.tierlists.core.base.ResourceService
 import io.smallrye.mutiny.Uni
 import javax.inject.Inject
+import javax.ws.rs.NotFoundException
 import javax.ws.rs.WebApplicationException
 import javax.ws.rs.core.Response
 
-abstract class MongoResourcesApi<Resource : Any> : ResourcesApi<Resource> {
-
+abstract class MongoRestHelper<Resource : Any> : RestHelper<Resource> {
 	@Inject
 	private lateinit var svc: ResourceService<Resource>
+
+	override fun get(id: String): Uni<Resource> =
+		svc.get(id).onItem().ifNull().failWith(NotFoundException()).map { r -> r!! }
+
+	override fun delete(id: String): Uni<Void> = svc.delete(id)
 
 	override fun list(): Uni<List<Resource>> = svc.list()
 

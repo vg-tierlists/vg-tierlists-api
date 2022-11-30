@@ -1,9 +1,9 @@
 package dev.stocky37.tierlists.core
 
 import com.github.slugify.Slugify
-import dev.stocky37.tierlists.api.json.Game
 import dev.stocky37.tierlists.core.base.MongoEntityResourceService
 import dev.stocky37.tierlists.db.GameEntity
+import dev.stocky37.tierlists.model.Game
 import io.quarkus.mongodb.panache.kotlin.reactive.ReactivePanacheMongoRepository
 import io.smallrye.mutiny.Uni
 import org.bson.types.ObjectId
@@ -16,11 +16,11 @@ class GameService : MongoEntityResourceService<Game, GameEntity>(), ReactivePana
 	@Inject
 	internal lateinit var slugifier: Slugify
 
-	override fun findById(idOrSlug: String): Uni<GameEntity?> {
-		return if (ObjectId.isValid(idOrSlug)) {
-			findById(ObjectId(idOrSlug))
+	override fun findById(id: String): Uni<GameEntity?> {
+		return if (ObjectId.isValid(id)) {
+			findById(ObjectId(id))
 		} else {
-			findBySlug(idOrSlug)
+			findBySlug(id)
 		}
 	}
 
