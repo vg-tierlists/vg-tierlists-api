@@ -1,32 +1,28 @@
 package dev.stocky37.tierlists.core
 
 import com.github.slugify.Slugify
-import dev.stocky37.tierlists.api.json.Game
-import dev.stocky37.tierlists.core.base.MongoEntityResourceService
+import dev.stocky37.tierlists.core.base.MongoResourceService
 import dev.stocky37.tierlists.db.GameEntity
-import io.quarkus.mongodb.panache.kotlin.reactive.ReactivePanacheMongoRepository
+import dev.stocky37.tierlists.model.Game
 import io.smallrye.mutiny.Uni
 import org.bson.types.ObjectId
 import javax.enterprise.context.ApplicationScoped
 import javax.inject.Inject
 
 @ApplicationScoped
-class GameService : MongoEntityResourceService<Game, GameEntity>(), ReactivePanacheMongoRepository<GameEntity> {
+class GameService @Inject constructor(
+	private val slugifier: Slugify
+) : MongoResourceService<Game, GameEntity>() {
 
-	@Inject
-	internal lateinit var slugifier: Slugify
-
-	override fun findById(idOrSlug: String): Uni<GameEntity?> {
-		return if (ObjectId.isValid(idOrSlug)) {
-			findById(ObjectId(idOrSlug))
+	override fun findById(id: String): Uni<GameEntity?> {
+		return if (ObjectId.isValid(id)) {
+			super.findById(id)
 		} else {
-			findBySlug(idOrSlug)
+			findBySlug(id)
 		}
 	}
 
 	fun findBySlug(slug: String) = find("slug = ?1", slug).firstResult()
-
-	override fun repo() = this
 
 	override fun toEntity(resource: Game): GameEntity {
 		return GameEntity(

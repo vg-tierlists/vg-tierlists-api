@@ -1,4 +1,4 @@
-package dev.stocky37.tierlists.api.json
+package dev.stocky37.tierlists.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
