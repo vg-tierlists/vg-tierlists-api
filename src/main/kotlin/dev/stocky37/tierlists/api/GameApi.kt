@@ -1,6 +1,7 @@
 package dev.stocky37.tierlists.api
 
 import dev.stocky37.tierlists.model.Game
+import dev.stocky37.tierlists.rest.util.NullToNotFound
 import io.smallrye.mutiny.Uni
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse
 import org.eclipse.microprofile.openapi.annotations.tags.Tag
@@ -12,6 +13,7 @@ import javax.ws.rs.GET
 interface GameApi {
 
 	@GET
+	@NullToNotFound
 	fun get(@RestPath("gameId") id: String): Uni<Game?>
 
 	@DELETE
