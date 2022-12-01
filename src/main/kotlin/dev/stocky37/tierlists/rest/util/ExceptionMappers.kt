@@ -7,7 +7,6 @@ import org.jboss.resteasy.reactive.RestResponse
 import org.jboss.resteasy.reactive.server.ServerExceptionMapper
 
 class ExceptionMappers {
-
 	@ServerExceptionMapper
 	fun mapMongoExceptions(e: MongoWriteException): Uni<RestResponse<Any>> {
 		return Uni.createFrom().item(
