@@ -6,10 +6,11 @@ import javax.ws.rs.core.Response.Status.NOT_FOUND
 
 
 class Filters {
+	@NullToNotFound
 	@ServerResponseFilter
-	fun notFoundFilter(responseContext: ContainerResponseContext) {
-		if (responseContext.entity == null) {
-			responseContext.statusInfo = NOT_FOUND
+	fun notFoundFilter(response: ContainerResponseContext) {
+		if (response.entity == null) {
+			response.statusInfo = NOT_FOUND
 		}
 	}
 }
