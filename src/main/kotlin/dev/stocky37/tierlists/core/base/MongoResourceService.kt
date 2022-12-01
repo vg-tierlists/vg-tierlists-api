@@ -6,11 +6,11 @@ import io.smallrye.mutiny.Uni
 import org.bson.types.ObjectId
 
 
-abstract class MongoEntityResourceService<Resource : Any, Entity : PanacheMongoEntityBase>
+abstract class MongoResourceService<Resource : Any, Entity : PanacheMongoEntityBase>
 	: ResourceService<Resource> {
 
 	override fun get(id: String): Uni<Resource?> {
-		return findById(id).map(::fromEntityNullable)
+		return findById(id).map(::fromNullableEntity)
 	}
 
 	override fun list(): Uni<List<Resource>> {
@@ -29,7 +29,7 @@ abstract class MongoEntityResourceService<Resource : Any, Entity : PanacheMongoE
 		return repo().findById(ObjectId(id))
 	}
 
-	protected fun fromEntityNullable(entity: Entity?): Resource? {
+	protected fun fromNullableEntity(entity: Entity?): Resource? {
 		return if (entity == null) {
 			null
 		} else {

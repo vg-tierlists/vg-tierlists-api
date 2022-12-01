@@ -1,7 +1,7 @@
 package dev.stocky37.tierlists.core
 
 import com.github.slugify.Slugify
-import dev.stocky37.tierlists.core.base.MongoEntityResourceService
+import dev.stocky37.tierlists.core.base.MongoResourceService
 import dev.stocky37.tierlists.db.GameEntity
 import dev.stocky37.tierlists.model.Game
 import io.quarkus.mongodb.panache.kotlin.reactive.ReactivePanacheMongoRepository
@@ -11,7 +11,7 @@ import javax.enterprise.context.ApplicationScoped
 import javax.inject.Inject
 
 @ApplicationScoped
-class GameService : MongoEntityResourceService<Game, GameEntity>(), ReactivePanacheMongoRepository<GameEntity> {
+class GameService : MongoResourceService<Game, GameEntity>(), ReactivePanacheMongoRepository<GameEntity> {
 
 	@Inject
 	internal lateinit var slugifier: Slugify

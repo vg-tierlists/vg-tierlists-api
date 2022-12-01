@@ -9,7 +9,7 @@ import javax.ws.rs.GET
 interface GameApi {
 
 	@GET
-	fun get(@RestPath("gameId") id: String): Uni<Game>
+	fun get(@RestPath("gameId") id: String): Uni<Game?>
 
 	@DELETE
 	fun delete(@RestPath("gameId") id: String): Uni<Void>
