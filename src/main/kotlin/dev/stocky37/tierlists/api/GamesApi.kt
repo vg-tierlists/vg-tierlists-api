@@ -2,6 +2,7 @@ package dev.stocky37.tierlists.api
 
 import dev.stocky37.tierlists.model.Game
 import io.smallrye.mutiny.Uni
+import org.eclipse.microprofile.openapi.annotations.tags.Tag
 import javax.ws.rs.Consumes
 import javax.ws.rs.GET
 import javax.ws.rs.POST
@@ -10,6 +11,7 @@ import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 
 
+@Tag(name = "Games")
 @Path("/games")
 interface GamesApi {
 
